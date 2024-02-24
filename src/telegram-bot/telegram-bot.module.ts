@@ -13,6 +13,6 @@ import { TelegramBotMiddleware } from "./telegram-bot.middleware";
 })
 export class TelegramBotModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(TelegramBotMiddleware);
+        consumer.apply(TelegramBotMiddleware).forRoutes('*');
     }
 }
