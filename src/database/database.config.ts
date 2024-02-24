@@ -7,12 +7,14 @@ export default registerAs('database', () => {
         dbUser: process.env.DB_USER,
         dbName: process.env.DB_NAME,
         dbPassword: process.env.DB_PASSWORD,
+        uri: process.env.DB_URI,
     };
     const schema = Joi.object({
         dbHost: Joi.string().required(),
         dbUser: Joi.string().required(),
         dbName: Joi.string().required(),
         dbPassword: Joi.string().required(),
+        uri: Joi.string().required(),
     });
 
     const { error } = schema.validate(values, { abortEarly: false });

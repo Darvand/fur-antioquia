@@ -7,9 +7,9 @@ import databaseConfig from "./database.config";
     imports: [
         MongooseModule.forRootAsync({
             useFactory: async (config: ConfigType<typeof databaseConfig>) => {
-                Logger.log(`Connecting to database: ${`mongodb+srv://${config.dbUser}:${config.dbPassword}@${config.dbHost}/?retryWrites=true&w=majority&appName=hogar-dev`}`)
+                Logger.log(`Connecting to database: ${config.uri}`)
                 return {
-                    uri: `mongodb+srv://${config.dbUser}:${config.dbPassword}@${config.dbHost}/retryWrites=true&w=majority&appName=hogar-dev`,
+                    uri: config.uri,
                     dbName: config.dbName,
                 }
             },
