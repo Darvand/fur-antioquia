@@ -7,7 +7,7 @@ import databaseConfig from "./database.config";
     imports: [
         MongooseModule.forRootAsync({
             useFactory: async (config: ConfigType<typeof databaseConfig>) => ({
-                uri: `mongodb+srv://${config.dbUser}:${config.dbPassword}@${config.dbHost}/retryWrites=true&w=majority`,
+                uri: `mongodb+srv://${config.dbUser}:${config.dbPassword}@${config.dbHost}/retryWrites=true&w=majority&appName=hogar-dev`,
                 dbName: config.dbName,
             }),
             inject: [databaseConfig.KEY],
