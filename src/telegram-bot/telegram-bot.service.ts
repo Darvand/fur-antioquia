@@ -1,9 +1,10 @@
-import { Bot } from "grammy";
+import { Bot, webhookCallback } from "grammy";
 import { Command } from "./telegram-bot.server";
 import { Inject, Logger } from "@nestjs/common";
 import telegramBotConfig from "./telegram-bot.config";
 import { ConfigType } from "@nestjs/config";
 import { inspect } from "util";
+import { NextFunction, Request, Response } from "express";
 
 export class TelegramBotService {
 
@@ -32,7 +33,9 @@ export class TelegramBotService {
         this.bot.catch((err) => {
             this.logger.error("Bot Error: ", err);
         });
-        this.bot.start();
+        if (process.env.NODE_ENV === "dev") {
+            this.bot.start();
+        }
         this.logger.log("Bot started")
     }
 
@@ -50,5 +53,9 @@ export class TelegramBotService {
 
     setCommands(commands: Command[]) {
         this.bot.api.setMyCommands(commands)
+    }
+
+    middleware() {
+        return webhookCallback(this.bot, 'express')
     }
 }
