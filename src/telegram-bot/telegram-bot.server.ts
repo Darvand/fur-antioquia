@@ -24,7 +24,7 @@ export class TelegramBotServer extends Server implements CustomTransportStrategy
 
     async bindHandlers(): Promise<void> {
         this.messageHandlers.forEach((handler, command) => {
-            this.logger.log(`Registring command: ${command}`);
+            this.logger.log(`Handling command: ${command}`);
             const pattern = JSON.parse(command).command
             this.bot.command(pattern, handler);
         })
@@ -33,7 +33,7 @@ export class TelegramBotServer extends Server implements CustomTransportStrategy
     }
 
     close() {
-        console.log("Cerrando servidor de Telegram");
+        this.logger.log("Closing bot");
         this.bot.stop();
     }
 }

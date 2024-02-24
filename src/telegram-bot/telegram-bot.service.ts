@@ -15,12 +15,11 @@ export class TelegramBotService {
 
     start() {
         this.bot.on('message', async (ctx) => {
+            this.logger.debug(`User with id ${ctx.message.from.id} sent a message: ${ctx.message.text}`)
             const isTopicMessage = ctx.message.is_topic_message
             if (isTopicMessage) {
                 const isAdminTopic = ctx.message.reply_to_message.forum_topic_created.name === "Admins"
                 if (isAdminTopic) {
-                    // const isMemberAdmin = ctx.message.from
-                    // console.log("Mensaje recibido: ", inspect(ctx, { depth: 10 }));
                     const member = await ctx.api.getChatMember(this.config.chatId, ctx.message.from.id);
                     if (member.status !== "administrator" && member.status !== "creator") {
 
@@ -34,6 +33,7 @@ export class TelegramBotService {
             this.logger.error("Bot Error: ", err);
         });
         this.bot.start();
+        this.logger.log("Bot started")
     }
 
     command(pattern: string, handler: (ctx: any) => void) {

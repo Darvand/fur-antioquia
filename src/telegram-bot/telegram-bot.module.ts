@@ -1,7 +1,8 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TelegramBotController } from "./telegram-bot.controller";
 import { TelegramBotService } from "./telegram-bot.service";
 import { ElectionsModule } from "src/elections/elections.module";
+import { webhookCallback } from "grammy";
 
 @Module({
     imports: [ElectionsModule],
@@ -9,4 +10,8 @@ import { ElectionsModule } from "src/elections/elections.module";
     providers: [TelegramBotService]
 
 })
-export class TelegramBotModule { }
+export class TelegramBotModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(webhookCallback);
+    }
+}
