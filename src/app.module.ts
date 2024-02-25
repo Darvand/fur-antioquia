@@ -17,8 +17,4 @@ import { TelegramBotMiddleware } from './telegram-bot/telegram-bot.middleware';
     })],
   controllers: [AppController],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TelegramBotMiddleware).forRoutes('*');
-  }
-}
+export class AppModule { }
