@@ -15,6 +15,9 @@ export class TelegramBotController {
         description: 'Obtiene la lista de administradores del chat'
     })
     async getAdmins(ctx: Context) {
+        if (ctx.message.message_thread_id === 2) {
+            return ctx.deleteMessage();
+        }
         const admins = await this.bot.getAdmins();
         this.logger.debug(`Found ${admins.length} admins`);
         const listHtml = admins.map((admin) => {
@@ -28,7 +31,10 @@ export class TelegramBotController {
         description: 'Resultados de las votaciones'
     })
     async getResults(ctx: Context) {
-        this.logger.debug("Getting election results");
+        if (ctx.message.message_thread_id === 2) {
+            return ctx.deleteMessage();
+        }
+        this.logger.debug("Getting election results", ctx.message);
         const results = await this.elections.getHTMLResults();
         return ctx.reply(results, { parse_mode: "HTML" });
     }

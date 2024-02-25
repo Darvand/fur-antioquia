@@ -19,8 +19,9 @@ export class TelegramBotService {
             this.logger.debug(`User with id ${ctx.message.from.id} sent a message: ${ctx.message.text}`)
             const isTopicMessage = ctx.message.is_topic_message
             if (isTopicMessage) {
-                const isAdminTopic = ctx.message.reply_to_message.forum_topic_created.name === "Admins"
-                if (isAdminTopic) {
+                this.logger.debug("Message from topic", inspect(ctx.message, { depth: 20 }));
+                const isAdminTopic = ctx.message.reply_to_message?.forum_topic_created?.name === "Admins"
+                if (isAdminTopic || ctx.message.message_thread_id === 2) {
                     const member = await ctx.api.getChatMember(this.config.chatId, ctx.message.from.id);
                     if (member.status !== "administrator" && member.status !== "creator") {
 
