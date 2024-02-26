@@ -13,8 +13,9 @@ import { TelegramBotMiddleware } from './telegram-bot/telegram-bot.middleware';
     TelegramBotModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [telegramBotConfig, databaseConfig]
-    })],
+      load: [telegramBotConfig, databaseConfig],
+    }),
+  ],
   controllers: [AppController],
 })
-export class AppModule { }
+export class AppModule {}
